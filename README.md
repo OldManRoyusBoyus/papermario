@@ -1,3 +1,5 @@
+\mainpage
+
 # Paper Mario
 
 [![Build Status][jenkins-badge]][jenkins]

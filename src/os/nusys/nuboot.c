@@ -15,6 +15,13 @@ static u64 IdleStack[NU_SC_STACK_SIZE / sizeof(u64)];
 void (*nuIdleFunc)(void);
 void __osInitialize_autodetect(void);
 
+/*!
+ * @brief Entry Point from MIPS Assembly
+ *
+ * Create an idle thread and use boot idle as the thread start point
+ *
+ * Then enter boot idle
+ */
 void nuBoot(void) {
     osInitialize();
 #if VERSION_PAL
@@ -24,6 +31,18 @@ void nuBoot(void) {
     osStartThread(&IdleThread);
 }
 
+/*!
+ * @brief Initialize nusys and os functionality and boot into the game
+ *
+ * Establish communication with the southbridge, establishing comms with the reality coprocessor, sets NTSC of PAL based
+ * on the compiler preprocessor definitions
+ *
+ * Create the scheduler with the graphics, audio, and scheduler threads started on the system
+ *
+ * Start the boot main thread in main.c (paper mario game application entry point)
+ *
+ * Idle thread then lowers its priority on the scheduler and executes a callback (which is probably a system wait or some other function)
+ */
 void boot_idle(void* data) {
     nuIdleFunc = NULL;
 

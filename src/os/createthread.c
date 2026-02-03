@@ -1,6 +1,27 @@
 #include "PR/R4300.h"
 #include "PR/osint.h"
 
+/**
+ * Create an OS Thread that executes on a function. Assign a parent thread
+ *
+ * Set all of the relevant data
+ *
+ * Add the thread to the scheduler queue (thread exec queue?)
+ *
+ * pc is program counter
+ * a0 is first argument
+ * ra is return address
+ *
+ * See mips32 register documentation for more here
+ * https://en.wikibooks.org/wiki/MIPS_Assembly/Register_File
+ *
+ * @param t thread primitive passed into the function to be set
+ * @param id thread id
+ * @param entry function for the thread to start execution at
+ * @param arg argument to pass into the function
+ * @param sp stack pointer
+ * @param p thread priority number
+ */
 void osCreateThread(OSThread *t, OSId id, void (*entry)(void *), void *arg, void *sp, OSPri p) {
     register u32 saveMask;
     OSIntMask mask;

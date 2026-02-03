@@ -45,6 +45,13 @@ extern IMG_BIN ResetTilesImg[];
 u16* ResetFrameBufferArray;
 u16* nuGfxZBuffer;
 
+/**
+ * @brief
+ *
+ * Turn off the display and configure the graphical setup
+ *
+ * @param data
+ */
 void boot_main(void* data) {
 #if VERSION_JP
     if (osTvType == OS_TV_NTSC) {
@@ -100,6 +107,14 @@ void boot_main(void* data) {
     while (true) {}
 }
 
+/**
+ * Callback function setup in boot main
+ *
+ * Checks for hot frame and if on hot frame (every other frame counter 60 times per second)
+ * step the game loop and draw the outpu
+ *
+ * @param gfxTaskNum
+ */
 void gfxRetrace_Callback(s32 gfxTaskNum) {
     if (ResetGameState != RESET_STATE_NONE) {
         if (ResetGameState == RESET_STATE_INIT) {

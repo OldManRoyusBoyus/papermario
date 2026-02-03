@@ -1,0 +1,11 @@
+sequenceDiagram
+    entry_point_asm ->>+ nuboot_c: jump register $t2
+    nuboot_c ->>+ boot_idle : begin idle thread
+    boot_idle ->> boot_main : setup os and nusys and enter game on main thread
+    boot_main ->> gfxRetrace_Callback : Initialize graphics pipleine and set callback for gfxRetrace_Callback
+    boot_main ->> boot_main : turn the display back on and busy wait
+    gfxRetrace_Callback ->> gfxRetrace_Callback : check if reset button has been pressed and wait for hot frame
+    gfxRetrace_Callback ->> step_game_loop : on hot frame, step the game loop and draw the output
+
+
+
